@@ -209,4 +209,110 @@ RETURN emp, book;
 
 输出：
 
-![](https://github.com/percent4/Storing_pictures/blob/master/buy.png)
+![image](http://images.cnblogs.com/cnblogs_com/jclian91/1403991/o_buy.png)
+
+6. DELETE
+
+- 删除节点
+- 删除节点及相关节点和关系
+
+```
+MATCH (emp:Employee)
+WHERE emp.name="Xyz"
+DELETE emp;
+```
+
+输出：
+
+![](http://images.cnblogs.com/cnblogs_com/jclian91/1403991/o_neo4j_2.png)
+
+7. REMOVE
+
+- 删除节点或关系的标签
+- 删除节点或关系的属性
+
+DELETE和REMOVE命令之间的主要区别 - 
+
+- DELETE操作用于删除节点和关联关系。
+- REMOVE操作用于删除标签和属性。
+
+例如:
+
+```
+MATCH (book { id:122 })
+REMOVE book.price
+RETURN book
+```
+
+8. SET
+
+SET子句来执行以下操作:
+
+- 向现有节点或关系添加新属性
+- 添加或更新属性值
+
+例如:
+
+```
+MATCH (emp:Employee)
+WHERE emp.name="Mno"
+SET emp.deptno=100
+RETURN emp;
+```
+
+输出:
+
+```
+╒══════════════════════════════════════════════════════╕
+│"emp"                                                 │
+╞══════════════════════════════════════════════════════╡
+│{"name":"Mno","empid":1003,"salary":5000,"deptno":100}│
+└──────────────────────────────────────────────────────┘
+```
+
+9. ORDER BY
+
+
+输入：
+
+```
+MATCH (emp:Employee)
+RETURN emp;
+```
+
+输出:
+
+```
+╒══════════════════════════════════════════════════════╕
+│"emp"                                                 │
+╞══════════════════════════════════════════════════════╡
+│{"name":"Abc","empid":1001,"salary":20000,"deptno":10}│
+├──────────────────────────────────────────────────────┤
+│{"name":"Pqr","empid":1002,"salary":45000,"deptno":20}│
+├──────────────────────────────────────────────────────┤
+│{"name":"Mno","empid":1003,"salary":5000,"deptno":100}│
+└──────────────────────────────────────────────────────┘
+
+```
+
+ORDER BY 例子：
+
+```
+MATCH (emp:Employee)
+RETURN emp.empid,emp.name,emp.salary,emp.deptno
+ORDER BY emp.salary;
+```
+
+输出:
+
+```
+╒═══════════╤══════════╤════════════╤════════════╕
+│"emp.empid"│"emp.name"│"emp.salary"│"emp.deptno"│
+╞═══════════╪══════════╪════════════╪════════════╡
+│1003       │"Mno"     │5000        │100         │
+├───────────┼──────────┼────────────┼────────────┤
+│1001       │"Abc"     │20000       │10          │
+├───────────┼──────────┼────────────┼────────────┤
+│1002       │"Pqr"     │45000       │20          │
+└───────────┴──────────┴────────────┴────────────┘
+```
